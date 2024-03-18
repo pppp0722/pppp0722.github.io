@@ -1,6 +1,5 @@
 ---
 title: "OpenFeign, WireMock을 사용한 Mock Server 테스트"
-author: ilhwanee
 date: 2024-03-17 21:53:00 +0900
 categories: [Spring]
 tags: [Spring, OpenFeign, WireMock]
