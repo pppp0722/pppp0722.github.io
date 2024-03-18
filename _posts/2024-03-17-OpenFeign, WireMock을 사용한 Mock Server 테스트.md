@@ -10,11 +10,9 @@ tags: [Spring, OpenFeign, WireMock]
 따라서 HTTP 클라이언트는 자주 사용되는, 서버 개발에 필수적인 요소입니다.
 
 Java 기반인 Spring Framework를 사용하는 경우 다음 HTTP 클라이언트 라이브러리를 고려할 수 있습니다.
-```
-- RestTemplate: Spring Framework에서 제공하는 전통적인 방식의 HTTP 클라이언트
-- WebClient: Spring5에서 소개된 reactive HTTP 클라이언트
-- OpenFeign: Netflix가 개발 시작한, 선언적 방식으로 사용할 수 있는 HTTP 클라이언트
-```
+- `RestTemplate`: Spring Framework에서 제공하는 전통적인 방식의 HTTP 클라이언트
+- `WebClient`: Spring5에서 소개된 reactive HTTP 클라이언트
+- `OpenFeign`: Netflix가 개발 시작한, 선언적 방식으로 사용할 수 있는 HTTP 클라이언트
 
 <br>
 
@@ -35,12 +33,10 @@ Java 기반인 Spring Framework를 사용하는 경우 다음 HTTP 클라이언�
 <br>
 
 테스트 환경은 다음과 같습니다.
-```
 - org.springframework.boot 3.0.13
 - org.springframework.cloud:spring-cloud-starter-openfeign 4.0.3
 - org.springframework.cloud:spring-cloud-contract-wiremock:4.0.4
 - JUnit5
-```
 
 <br>
 
@@ -48,7 +44,7 @@ Java 기반인 Spring Framework를 사용하는 경우 다음 HTTP 클라이언�
 
 # Setting
 
-기본적인 설정은 어렵지 않습니다.
+기본적인 설정은 크게 어렵지 않습니다.
 
 ```java
 @SpringBootApplication
@@ -70,6 +66,8 @@ public class Application {
 
 다른 서버의 요청 시 timeout 시간이나 어떤 인코더, 디코더를 사용할지 등의 설정은 configuration class와 configuration properties 모두 가능합니다.
 
+configuration class로 구현했다면 `@FeignClient`의 `configuration` 속성에 등록하여 적용할 수 있습니다. (아래에서 설명)
+
 ```java
 @Configuration
 public class FooConfiguration {
@@ -85,7 +83,7 @@ public class FooConfiguration {
 }
 ```
 
-```
+```yaml
 spring:
     cloud:
         openfeign:
@@ -149,11 +147,9 @@ public interface TestClient {
 <br>
 
 `@FeignClient`의 주요 속성은 다음과 같습니다.
-```
-- name: FeignClient의 이름
-- url: 실제 클라이언트의 URL
-- configuration: HttpClient, Encoder, ErrorDecoder 등 FeignClient 설정 클래스
-```
+- `name`: FeignClient의 이름
+- `url`: 실제 클라이언트의 URL
+- `configuration`: HttpClient, Encoder, ErrorDecoder 등 FeignClient 설정 클래스
 
 >더욱 자세한 내용은 [공식문서](https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/#spring-cloud-feign) 참고
 
@@ -162,9 +158,12 @@ public interface TestClient {
 앞서 설명드렸던 configuration class를 `@FeignClient`의 속성으로 추가하여 해당 클라이언트와 통신 시 설정을 추가할 수 있습니다.
 
 특히 클라이언트가 에러를 응답할 때 핸들링이 필요한데, 이를 configuration class에서 `ErrorDecoder`를 등록하거나, 호출 시에 발생하는 `FeignException`을 처리하는 방법이 있습니다.
->FeignException은 다음으로 세분화
-> - `FeignClientException`: 4XX 에러
-> - `FeignServerException`: 5XX 에러
+
+또한 FeignException은 다음으로 세분화 됩니다.
+- `FeignClientException`: 4XX 에러
+- `FeignServerException`: 5XX 에러
+
+<br>
 
 Exception을 처리하는 방법은 직관성이 떨어지기에, ErrorDecoder를 사용하는 방법이 주로 사용됩니다.
 
@@ -189,13 +188,11 @@ ErrorDecoder는 에러 응답에서 처리할 수 있는 예외로 반환하여 
 <br>
 
 마지막으로 위 코드 예시의 `TestClient`의 `test()` 메서드를 호출하면, 런타임에서 다음 동작이 이뤄집니다.
-```
 1. 메서드 호출
 2. "${url.test}/test"에 GET 요청
 3. 실제 클라이언트가 요청을 처리하고 응답
 4. 응답 받은 HTTP Response를 반환 타입인 ResponseEntity<TestResponseDTO>로 매핑
 5. return
-```
 
 <br>
 
