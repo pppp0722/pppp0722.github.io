@@ -112,11 +112,11 @@ public enum ErrorCode {
 @RequiredArgsConstructor
 class ClientValidationService implements ValidateClientUseCase {
 
-    private final ReadApplicationPort readApplicationPort;
+    private final ReadClientPort readClientPort;
 
     @Transactional(readOnly = true)
     public void validateClient(ValidateClientCommand command) {
-        readApplicationPort.findByClientId(command.clientId())
+        readClientPort.findByClientId(command.clientId())
                 .filter(e -> e.isClientSecretMatched(command.clientSecret()))
                 .orElseThrow(() -> new CustomException(ErrorCode.UNAUTHORIZED));
     }
@@ -204,11 +204,11 @@ BasePackage 설정은 다음과 같습니다.
 @RequiredArgsConstructor
 class ClientValidationService implements ValidateClientUseCase {
 
-    private final ReadApplicationPort readApplicationPort;
+    private final ReadClientPort readClientPort;
 
     @Transactional(readOnly = true)
     public void validateClient(ValidateClientCommand command) {
-        readApplicationPort.findByClientId(command.clientId())
+        readClientPort.findByClientId(command.clientId())
                 .filter(e -> e.isClientSecretMatched(command.clientSecret()))
                 .orElseThrow(() -> new CustomException(ErrorCode.UNAUTHORIZED));
     }
