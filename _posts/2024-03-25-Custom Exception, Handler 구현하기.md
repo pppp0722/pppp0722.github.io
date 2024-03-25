@@ -220,6 +220,8 @@ class ClientValidationService implements ValidateClientUseCase {
 ![](/assets/img/postman.png)
 _Postman 결과_
 
+기대한 동작을 확인할 수 있습니다.
+
 <br>
 
 ---
