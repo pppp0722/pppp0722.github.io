@@ -1,5 +1,5 @@
 ---
-title: "CLombok @Builder로 특정 프로퍼티만 변경된 불변 객체 생성하기"
+title: "Lombok @Builder로 특정 프로퍼티만 변경된 불변 객체 생성하기"
 date: 2024-04-12 18:53:00 +0900
 categories: [Java]
 tags: [Java, Lombok]
