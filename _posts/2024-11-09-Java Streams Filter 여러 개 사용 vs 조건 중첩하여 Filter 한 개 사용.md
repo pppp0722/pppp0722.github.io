@@ -110,6 +110,29 @@ Stream은 최종 연산이 호출될 때 각 element에 대하여 하나씩 파�
 
 <br>
 
+따라서 아래 코드와 같이 복잡한 조건문을 사용하는 것이 성능에 더욱 좋은 영향을 줍니다.
+
+```java
+public record User(String name, int age, Gender gender) {
+    
+    public boolean isLeeAndMaleAtAge29() {
+        return name.startsWith("이")
+          && gender == Gender.MALE
+          && age == 29;
+    }
+}
+```
+
+```java
+List<User> filteredUsers = userStream
+  .filter(User::isLeeAndMaleAtAge29)
+  .toList();
+```
+
+> 메서드로 추출하여 메서드 참조를 사용하면 가독성도 살리며 성능 최적화에도 도움을 줌!
+
+<br>
+
 그럼에도 불구하고, 여러 `filter` 메서드를 연쇄적으로 사용해야 한다면, 어떤 식으로 코드를 작성해야 할까요?
 
 <br>
