@@ -11,6 +11,8 @@ Spring WebFlux에서 Reactive Stream 내 데이터 변환에는 `map` 메서드�
 
 <br>
 
+---
+
 ### map
 
 `map` 메서드는 데이터를 **동기적**으로 변환하기 위해 사용됩니다.
