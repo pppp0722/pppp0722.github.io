@@ -106,6 +106,15 @@ Flux<Post> flux1 = Mono.just("ilhwanee")
 
 <br>
 
+단, 기존 스트림에서 `flatMap`의 호출 순서는 보장되지만 비동기 작업이 먼저 처리되면 작업이 완료된 순서대로 소비됩니다.
+
+만약 소비되는 순서도 중요하다면 `flatMap` 대신 `flatMapSequential`을 사용해야 합니다.
+- `flatMapSequential` : 비동기로 처리하되, 결과를 입력 순서대로 정렬해줌
+
+> 만약 실행 흐름도 중요하면 직렬 처리하는 `concatMap` 사용
+
+<br>
+
 ---
 
 ### 결론
