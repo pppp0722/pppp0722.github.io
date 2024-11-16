@@ -64,7 +64,7 @@ Mono<User> mono = Mono.just("ilhwanee")
 
 `Flux`에서 데이터 개수 증가가 가능하며, 비슷한 메서드인 `flatMapMany`를 사용하면 `Mono -> Flux`로 변환 가능합니다.
 
-> `Flux -> Mono` 변환은 `reduce` 사용
+> `Flux -> Mono` 변환은 `reduce`, `next`, `collectList` 등 사용
 
 ```java
 // flatMap 사용
